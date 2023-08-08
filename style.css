@@ -52,10 +52,6 @@ button {
     
 }
 
-.equal{
-    grid-column: span 2;
-    
-}
 
 button:hover{
     background-color: #006f54;
