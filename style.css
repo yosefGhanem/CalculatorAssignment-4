@@ -21,6 +21,10 @@
     background-color: #343632; 
     grid-column: 1 / -1;
     margin: 5% auto;
+    font: white;
+    font-size: 55px;
+    text-align: right;
+    
     
 }
 
