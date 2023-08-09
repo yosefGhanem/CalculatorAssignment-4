@@ -17,18 +17,31 @@ class Calculator {
             try {
                 this.currentInput = this.currentInput.replace(/X/g, '*');
                 const result = eval(this.currentInput);
-                this.display.innerText = result;
-                this.currentInput = result.toString();
+
+                if (result === Infinity || result === -Infinity) {
+                    this.display.innerText = 'Infinity';
+                    setTimeout(() => {
+                        this.display.innerText = '';
+                        this.currentInput = '';
+                    }, 2000);//clear infinity
+                } else {
+                    this.display.innerText = result;
+                    this.currentInput = result.toString();
+                }
             } catch (error) {
                 this.display.innerText = 'Error';
+                setTimeout(() => {
+                    this.display.innerText = '';
+                    this.currentInput = '';
+                }, 2000); // Clear error
             }
-            if(this.currentInput === '=' && this.currentInput != "") {
+            
+            if (this.currentInput === '=' && this.currentInput !== '') {
                 setTimeout(() => {
                     this.display.innerText = '';
                     this.currentInput = '';
                 }, 2000);
             }
-            
         } else if (buttonText === 'AC') {
             this.display.innerText = '';
             this.currentInput = '';
@@ -45,7 +58,7 @@ class Calculator {
             if (this.currentInput === '=') {
                 this.currentInput = '';
                 this.display.innerText = '';
-            } else if (this.currentInput.includes("=")) {
+            } else if (this.currentInput.includes('=')) {
                 this.currentInput = buttonText;
                 this.display.innerText = buttonText;
             } else {
