@@ -13,9 +13,11 @@ class Calculator {
     }
 
     handleButtonClick(buttonText) {
-        if (this.currentInput.length >= 11) {
+        if (this.currentInput.length >= 12) {
             // Do not allow further input if the limit is reached
-            return;
+            this.display.innerText = '';
+            this.currentInput = '';
+            alert("Number Limit Exceeded")
         }
         else if (buttonText === '=') {
             try {
@@ -42,8 +44,7 @@ class Calculator {
             }
         }
         else if (buttonText === 'AC') {
-            this.display.innerText = '';
-            this.currentInput = '';
+            
         }
         else if (buttonText === 'BACK') {
             this.currentInput = this.currentInput.slice(0, -1);
