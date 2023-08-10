@@ -61,7 +61,8 @@ class Calculator {
             }
         }
         else if (buttonText === 'AC') {
-            
+            this.display.innerText = '';
+            this.currentInput = '';
         }
         else if (buttonText === 'BACK') {
             this.currentInput = this.currentInput.slice(0, -1);
