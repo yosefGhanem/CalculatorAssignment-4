@@ -15,11 +15,14 @@ class Calculator {
 
     attachKeyboardListeners() {
         window.addEventListener('keydown', event => {
-            const key = event.key;
+            let key = event.key;
             if (key.match(/[0-9]|\.|[+\-*/%=]|Enter|Backspace/)) {
                 event.preventDefault();
                 if (key === 'Enter') {
                     key = '=';
+                }
+                if (key === 'Backspace/'){
+                    key = 'BACK';
                 }
                 const button = document.querySelector(`[value="${key}"]`);
                 if (button) {
@@ -30,7 +33,7 @@ class Calculator {
     }
   
     handleButtonClick(buttonText) {
-        if (this.currentInput.length >= 12) {
+        if (this.currentInput.length >= 10) {
             // Do not allow further input if the limit is reached
             this.display.innerText = '';
             this.currentInput = '';
