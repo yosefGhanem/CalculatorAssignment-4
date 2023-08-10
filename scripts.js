@@ -28,7 +28,7 @@ class Calculator {
             }
         });
     }
-
+  
     handleButtonClick(buttonText) {
         if (this.currentInput.length >= 12) {
             // Do not allow further input if the limit is reached
