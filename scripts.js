@@ -4,6 +4,7 @@ class Calculator {
         this.operationsButtons = document.querySelectorAll('.operator, .digit, .equal, .clear, .backspace, .percent, .digitzero, .sign, .decimal');
         this.currentInput = '';
         this.attachButtonListeners();
+        this.attachKeyboardListeners();
     }
 
     attachButtonListeners() {
@@ -12,6 +13,22 @@ class Calculator {
         });
     }
 
+    attachKeyboardListeners() {
+        window.addEventListener('keydown', event => {
+            const key = event.key;
+            if (key.match(/[0-9]|\.|[+\-*/%=]|Enter|Backspace/)) {
+                event.preventDefault();
+                if (key === 'Enter') {
+                    key = '=';
+                }
+                const button = document.querySelector(`[value="${key}"]`);
+                if (button) {
+                    button.click();
+                }
+            }
+        });
+    }
+  
     handleButtonClick(buttonText) {
         if (this.currentInput.length >= 12) {
             // Do not allow further input if the limit is reached
