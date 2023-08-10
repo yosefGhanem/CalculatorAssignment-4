@@ -61,7 +61,9 @@ class Calculator {
             }
         }
         else if (buttonText === 'AC') {
-            
+            this.currentInput = '';
+            this.display.innerText = '';
+            document.querySelector('.decimal').classList.remove('disabled');
         }
         else if (buttonText === 'BACK') {
             this.currentInput = this.currentInput.slice(0, -1);
