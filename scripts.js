@@ -13,7 +13,11 @@ class Calculator {
     }
 
     handleButtonClick(buttonText) {
-        if (buttonText === '=') {
+        if (this.currentInput.length >= 11) {
+            // Do not allow further input if the limit is reached
+            return;
+        }
+        else if (buttonText === '=') {
             try {
                 this.currentInput = this.currentInput.replace(/X/g, '*'); //replace string with * for eval
                 const result = eval(this.currentInput); //evaluates expression
