@@ -36,13 +36,6 @@ class Calculator {
                     this.currentInput = '';
                 }, 2000); // Clear error
             }
-            if (this.currentInput === '=' && this.currentInput !== '') 
-            {
-                setTimeout(() => {
-                    this.display.innerText = '';
-                    this.currentInput = '';
-                }, 2000);
-            }
         }
         else if (buttonText === 'AC') {
             this.display.innerText = '';
