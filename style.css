@@ -61,4 +61,7 @@ button:hover{
 }
 
 
-
+button.disabled {
+    background-color: #7f7f7f;
+    pointer-events: none;
+}

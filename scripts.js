@@ -1,7 +1,7 @@
 class Calculator {
     constructor(displayElementId) {
         this.display = document.getElementById(displayElementId);
-        this.operationsButtons = document.querySelectorAll('.operator, .digit, .equal, .clear, .backspace, .percent, .digitzero, .sign');
+        this.operationsButtons = document.querySelectorAll('.operator, .digit, .equal, .clear, .backspace, .percent, .digitzero, .sign, .decimal');
         this.currentInput = '';
         this.attachButtonListeners();
     }
@@ -15,46 +15,58 @@ class Calculator {
     handleButtonClick(buttonText) {
         if (buttonText === '=') {
             try {
-                this.currentInput = this.currentInput.replace(/X/g, '*');
-                const result = eval(this.currentInput);
-
+                this.currentInput = this.currentInput.replace(/X/g, '*'); //replace string with * for eval
+                const result = eval(this.currentInput); //evaluates expression
                 if (result === Infinity || result === -Infinity) {
                     this.display.innerText = 'Infinity';
                     setTimeout(() => {
                         this.display.innerText = '';
                         this.currentInput = '';
-                    }, 2000);//clear infinity
-                } else {
-                    this.display.innerText = result;
-                    this.currentInput = result.toString();
+                    }, 2000); // Clear infinity
+                } else if(!isNaN(result)){
+                    const roundedResult = this.roundToMaxDecimals(result, 6);// Adjust to 6 maximum decimal places
+                    this.display.innerText = roundedResult;
+                    this.currentInput = roundedResult.toString();
                 }
-            } catch (error) {
+            } 
+            catch (error) {
                 this.display.innerText = 'Error';
                 setTimeout(() => {
                     this.display.innerText = '';
                     this.currentInput = '';
                 }, 2000); // Clear error
             }
-            
-            if (this.currentInput === '=' && this.currentInput !== '') {
+            if (this.currentInput === '=' && this.currentInput !== '') 
+            {
                 setTimeout(() => {
                     this.display.innerText = '';
                     this.currentInput = '';
                 }, 2000);
             }
-        } else if (buttonText === 'AC') {
+        }
+        else if (buttonText === 'AC') {
             this.display.innerText = '';
             this.currentInput = '';
-        } else if (buttonText === 'BACK') {
+        }
+        else if (buttonText === 'BACK') {
             this.currentInput = this.currentInput.slice(0, -1);
             this.display.innerText = this.currentInput;
-        } else if (buttonText === '+/-') {
+        }
+        else if (buttonText === '+/-') {
             if (this.currentInput !== '' && this.currentInput !== '=') {
                 const num = parseFloat(this.currentInput);
-                this.currentInput = (-num).toString();
+                this.currentInput = (-num).toString();//convert to - / + and vice versa
                 this.display.innerText = this.currentInput;
             }
-        } else {
+        }
+        else if (buttonText === '.') {
+            if (!this.currentInput.includes('.')) {
+                this.currentInput += buttonText;
+                this.display.innerText = this.currentInput;
+            }
+            document.querySelector('.decimal').classList.add('disabled');//disable . once used
+        }
+        else {
             if (this.currentInput === '=') {
                 this.currentInput = '';
                 this.display.innerText = '';
@@ -73,9 +85,16 @@ class Calculator {
                 }
                 this.display.innerText = this.currentInput;
             }
-        }
+            // Re-enable the decimal button if necessary
+            if (!this.currentInput.includes('.')) {
+                document.querySelector('.decimal').classList.remove('disabled');
+            }
+            }
+    }
+
+    roundToMaxDecimals(value, maxDecimals) {
+        return parseFloat(value.toFixed(maxDecimals));
     }
 }
 
 const basicCalc = new Calculator('display');
-// Works perfectly
