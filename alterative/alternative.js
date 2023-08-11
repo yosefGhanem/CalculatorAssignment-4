@@ -17,6 +17,7 @@ let firstNumber = '',
     isOutcome = false
 
 
+
 // Adding number to display
 
 function addDigitToDisplay(digit) {

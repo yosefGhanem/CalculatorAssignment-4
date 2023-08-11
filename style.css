@@ -1,6 +1,9 @@
 * {
 	font-family: "Fraunces", serif;
 	color: #fff;
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
 }
 
 #calculator {
@@ -14,7 +17,7 @@
 	background-color: #224870;
 }
 
-#container > #display {
+#display {
 	border: 6px solid;
 	border-color: #002f24e4;
 	width: 350px;
@@ -42,6 +45,7 @@
 }
 
 button {
+	justify-self: center;
 	height: 75px;
 	width: 80px;
 	font-weight: bolder;
