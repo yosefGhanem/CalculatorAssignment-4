@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 class Calculator {
     constructor(displayElementId) {
         this.display = document.getElementById(displayElementId);
@@ -117,3 +118,5 @@ class Calculator {
 }
 
 const basicCalc = new Calculator('display');
+=======
+>>>>>>> parent of fd1974d (added keyboard support)

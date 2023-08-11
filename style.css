@@ -21,10 +21,6 @@
     background-color: #343632; 
     grid-column: 1 / -1;
     margin: 5% auto;
-    font: white;
-    font-size: 55px;
-    text-align: right;
-    
     
 }
 
@@ -56,14 +52,18 @@ button {
     
 }
 
+
 button:hover{
     background-color: #006f54;
 }
 
 
+<<<<<<< HEAD
 button.disabled {
     background-color: #7f7f7f;
     pointer-events: none;
 }
 
+=======
+>>>>>>> parent of fd1974d (added keyboard support)
 
