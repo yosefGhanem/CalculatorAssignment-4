@@ -15,22 +15,20 @@ class Calculator {
 
     attachKeyboardListeners() {
         window.addEventListener('keydown', event => {
-            let key = event.key;
-            if (key.match(/[0-9]|\.|[+\-*/%=]|Enter|Backspace/)) {
+            const key = event.key;
+            if (key === 'Enter') {
                 event.preventDefault();
-                if (key === 'Enter') {
-                    key = '=';
-                }
-                if (key === 'Backspace/'){
-                    key = 'BACK';
-                }
-                const button = document.querySelector(`[value="${key}"]`);
-                if (button) {
-                    button.click();
-                }
+                this.handleButtonClick('=');
+            } else if (key === 'Backspace') {
+                event.preventDefault();
+                this.handleButtonClick('BACK');
+            } else if (key.match(/[0-9]|\.|[+\-*/%=]/)) {
+                event.preventDefault();
+                this.handleButtonClick(key);
             }
         });
     }
+    
   
     handleButtonClick(buttonText) {
         if (this.currentInput.length >= 10) {
