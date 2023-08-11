@@ -1,117 +1,286 @@
-class Calculator {
-    constructor(displayElementId) {
-        this.display = document.getElementById(displayElementId);
-        this.operationsButtons = document.querySelectorAll('.operator, .digit, .equal, .clear, .backspace, .percent, .digitzero, .sign, .decimal');
-        this.currentInput = '';
-        this.attachButtonListeners();
-        this.attachKeyboardListeners();
+const display = document.querySelector('#display'),
+    digits = document.querySelectorAll('.digit'),
+    operators = document.querySelectorAll('.operator'),
+    equals = document.querySelector('.equal'),
+    clear = document.querySelector('.clear'),
+    del = document.querySelector('.backspace'),
+    decimal = document.querySelector('.decimal'),
+    sign = document.querySelector('.sign'),
+    percent = document.querySelector('.percent')
+
+
+let firstNumber = '',
+    secondNumber = '',
+    operator = '',
+    currentInput = '',
+    outcome,
+    isOutcome = false
+
+
+
+// Adding number to display
+
+function addDigitToDisplay(digit) {
+    if (currentInput.length >= 10) {
+        alert("Number Limit Exceeded, max 10 digits")
+        return
     }
 
-    attachButtonListeners() {
-        this.operationsButtons.forEach(button => {
-            button.addEventListener('click', () => this.handleButtonClick(button.textContent));
-        });
-    }
-    
-    attachKeyboardListeners() {
-        window.addEventListener('keydown', event => {
-            const key = event.key;
-            if (key === 'Enter') {
-                event.preventDefault();
-                this.handleButtonClick('=');
-            } else if (key === 'Backspace') {
-                event.preventDefault();
-                this.handleButtonClick('BACK');
-            } else if (key.match(/[0-9]|\.|[+\-*/%=]/)) {
-                event.preventDefault();
-                this.handleButtonClick(key);
-            }
-        });
-    }
-    
-  
-    handleButtonClick(buttonText) {
-        if (this.currentInput.length >= 10) {
-            // Do not allow further input if the limit is reached
-            this.display.innerText = '';
-            this.currentInput = '';
-            alert("Number Limit Exceeded")
-        }
-        else if (buttonText === '=') {
-            try {
-                this.currentInput = this.currentInput.replace(/X/g, '*'); //replace string with * for eval
-                const result = eval(this.currentInput); //evaluates expression
-                if (result === Infinity || result === -Infinity) {
-                    this.display.innerText = 'Infinity';
-                    setTimeout(() => {
-                        this.display.innerText = '';
-                        this.currentInput = '';
-                    }, 2000); // Clear infinity
-                } else if(!isNaN(result)){
-                    const roundedResult = this.roundToMaxDecimals(result, 6);// Adjust to 6 maximum decimal places
-                    this.display.innerText = roundedResult;
-                    this.currentInput = roundedResult.toString();
-                }
-            } 
-            catch (error) {
-                this.display.innerText = 'Error';
-                setTimeout(() => {
-                    this.display.innerText = '';
-                    this.currentInput = '';
-                }, 2000); // Clear error
-            }
-        }
-        else if (buttonText === 'AC') {
-            this.display.innerText = '';
-            this.currentInput = '';
-        }
-        else if (buttonText === 'BACK') {
-            this.currentInput = this.currentInput.slice(0, -1);
-            this.display.innerText = this.currentInput;
-        }
-        else if (buttonText === '+/-') {
-            if (this.currentInput !== '' && this.currentInput !== '=') {
-                const num = parseFloat(this.currentInput);
-                this.currentInput = (-num).toString();//convert to - / + and vice versa
-                this.display.innerText = this.currentInput;
-            }
-        }
-        else if (buttonText === '.') {
-            if (!this.currentInput.includes('.')) {
-                this.currentInput += buttonText;
-                this.display.innerText = this.currentInput;
-            }
-            document.querySelector('.decimal').classList.add('disabled');//disable . once used
-        }
-        else {
-            if (this.currentInput === '=') {
-                this.currentInput = '';
-                this.display.innerText = '';
-            } else if (this.currentInput.includes('=')) {
-                this.currentInput = buttonText;
-                this.display.innerText = buttonText;
-            } else {
-                if (buttonText === 'X') {
-                    this.currentInput += '*';
-                } else if (buttonText === '/') {
-                    this.currentInput += '/';
-                } else if (buttonText === '%') {
-                    this.currentInput += '%';
-                } else {
-                    this.currentInput += buttonText;
-                }
-                this.display.innerText = this.currentInput;
-            }
-            // Re-enable the decimal button if necessary
-            if (!this.currentInput.includes('.')) {
-                document.querySelector('.decimal').classList.remove('disabled');
-            }
-            }
-    }
+    display.textContent = ''
+    currentInput += digit
+    display.textContent = currentInput
+}
 
-    roundToMaxDecimals(value, maxDecimals) {
-        return parseFloat(value.toFixed(maxDecimals));
+digits.forEach(digit => {
+    digit.addEventListener('click', (e) => {
+        addDigitToDisplay(e.target.value)
+    })
+})
+
+// Clearing screen
+
+function clearScreen() {
+    firstNumber = ''
+    secondNumber = ''
+    operator = ''
+    outcome = null
+    currentInput = ''
+    display.textContent = '0'
+    isOutcome = false
+}
+
+clear.addEventListener('click', clearScreen)
+
+// Remove last digit
+
+function delDigit() {
+    if (currentInput.length === 1 && currentInput === '0') return
+
+    currentInput = currentInput.slice(0, -1)
+    display.textContent = currentInput
+
+    if (currentInput.length === 0) {
+        display.textContent = '0'
     }
 }
 
-const basicCalc = new Calculator('display');
+del.addEventListener('click', delDigit)
+
+// Add operator
+
+function addOperator(sign) {
+
+    if (currentInput.length === 0) {
+        currentInput = '0'
+    }
+
+    if (operator !== '' && currentInput !== '') {
+        calculation()
+    }
+
+    operator = ''
+    operator = sign
+
+    if (!isOutcome) {
+        firstNumber = currentInput
+        currentInput = ''
+    } else {
+        currentInput = ''
+    }
+}
+
+operators.forEach(o => {
+    o.addEventListener('click', (e) => {
+        addOperator(e.target.value)
+    })
+})
+
+// Add decimal
+
+function addDecimalPoint() {
+    if (currentInput !== '' && currentInput.includes('.')) return
+    if (currentInput.length >= 10) return
+
+    if (currentInput.length === 0) {
+        currentInput += '0.'
+        display.textContent = currentInput
+        return
+    }
+
+    currentInput += "."
+    display.textContent = currentInput
+
+}
+
+decimal.addEventListener('click', addDecimalPoint)
+
+// Change sign 
+
+function changeSign() {
+
+    if (currentInput.charAt(0) === '-') {
+        currentInput = currentInput.slice(1)
+        display.textContent = currentInput
+
+        return
+
+    }
+
+    if (currentInput.length === 0) {
+        display.textContent = "0"
+    }
+
+    currentInput = "-" + currentInput
+    display.textContent = currentInput
+
+}
+
+sign.addEventListener('click', changeSign)
+
+
+// Change to percents
+
+function changeToPercents() {
+    if (currentInput.length === 0 && currentInput === '') return
+
+    let inputLength = currentInput.length
+
+    if (inputLength === 1) {
+        currentInput = '0.0' + currentInput
+    } else if (inputLength === 2) {
+        currentInput = '0.' + currentInput
+    } else {
+        let currentInputArr = currentInput.split('')
+        currentInputArr.splice(currentInput.length - 2, 0, '.')
+
+        currentInput = currentInputArr.join('')
+    }
+    display.textContent = currentInput
+
+}
+
+percent.addEventListener('click', changeToPercents)
+
+
+// Check for number length
+
+function checkOutcomeLength(result) {
+    if (result.toString().length > 10) {
+        alert('This result is too long!')
+        return true
+    }
+}
+
+// Calculation functions
+
+function addition(num1, num2) {
+    outcome = num1 + num2
+
+}
+
+function subtraction(num1, num2) {
+    outcome = num1 - num2
+
+}
+
+function divide(num1, num2) {
+    outcome = num1 / num2
+
+}
+
+function multiply(num1, num2) {
+    outcome = num1 * num2
+
+}
+
+// Getting the result
+
+function calculation() {
+    if (operator && currentInput.length === 0) return
+
+    secondNumber = currentInput
+
+    let firstNumberInt = parseFloat(firstNumber)
+    let secondNumberInt = parseFloat(secondNumber)
+
+    if (operator === '/' && secondNumberInt === 0) {
+        alert('You cannot divide by 0')
+        clearScreen()
+        return
+    }
+
+    if (operator === '+') {
+        addition(firstNumberInt, secondNumberInt)
+    }
+
+    if (operator === '-') {
+        subtraction(firstNumberInt, secondNumberInt)
+    }
+
+    if (operator === '/') {
+        divide(firstNumberInt, secondNumberInt)
+    }
+
+    if (operator === '*') {
+        multiply(firstNumberInt, secondNumberInt)
+    }
+
+    if (outcome.toString().includes('.')) {
+        outcome = outcome.toFixed(3)
+    }
+
+    let lengthCheck = checkOutcomeLength(outcome)
+
+    if (lengthCheck) {
+        clearScreen()
+        return
+    }
+    operator = ''
+    isOutcome = true
+    firstNumber = outcome.toString()
+    currentInput = outcome.toString()
+    display.textContent = outcome.toString()
+}
+
+equals.addEventListener('click', calculation)
+
+// Keyboard support
+
+function keyboardSupport(key) {
+    let pressedKey = key
+    const operatorSigns = ['+', '-', '*', '/']
+    const regExCheck = /^[0-9]+$/
+
+
+    if (operatorSigns.includes(pressedKey)) {
+        addOperator(pressedKey)
+    }
+
+    if (pressedKey.match(regExCheck)) {
+        addDigitToDisplay(pressedKey)
+    }
+
+    if (pressedKey === "Backspace") {
+        delDigit()
+    }
+
+    if (pressedKey === 'Delete') {
+        clearScreen()
+    }
+
+    if (pressedKey === '.') {
+        addDecimalPoint()
+    }
+
+    if (pressedKey === 'Enter' || pressedKey === '=') {
+        calculation()
+    }
+
+    if (pressedKey === '%') {
+        changeToPercents()
+    }
+}
+
+window.addEventListener('keyup', (e) => {
+    keyboardSupport(e.key)
+})
