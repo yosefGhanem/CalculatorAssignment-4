@@ -31,6 +31,8 @@ function addDigitToDisplay(digit) {
         clearScreen()
     }
 
+
+
     display.textContent = ''
     currentInput += digit
     display.textContent = currentInput
@@ -60,7 +62,7 @@ clear.addEventListener('click', clearScreen)
 // Remove last digit
 
 function delDigit() {
-    if (currentInput.length === 1 && currentInput === '0') return
+    if (currentInput.length === 0 && currentInput === '') return
 
     currentInput = currentInput.slice(0, -1)
     display.textContent = currentInput
