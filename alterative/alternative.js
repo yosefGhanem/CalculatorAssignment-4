@@ -119,7 +119,13 @@ function changeSign() {
     if (currentInput.charAt(0) === '-') {
         currentInput = currentInput.slice(1)
         display.textContent = currentInput
+
         return
+
+    }
+
+    if (currentInput.length === 0) {
+        display.textContent = "0"
     }
 
     currentInput = "-" + currentInput
