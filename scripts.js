@@ -12,7 +12,7 @@ class Calculator {
             button.addEventListener('click', () => this.handleButtonClick(button.textContent));
         });
     }
-
+    
     attachKeyboardListeners() {
         window.addEventListener('keydown', event => {
             const key = event.key;
