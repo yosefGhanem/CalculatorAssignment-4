@@ -45,6 +45,7 @@
 }
 
 button {
+	justify-self: center;
 	height: 75px;
 	width: 80px;
 	font-weight: bolder;
