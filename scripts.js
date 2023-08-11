@@ -14,7 +14,8 @@ let firstNumber = '',
     operator = '',
     currentInput = '',
     outcome,
-    isOutcome = false
+    isOutcome = false,
+    wasCalculation = false
 
 
 
@@ -24,6 +25,10 @@ function addDigitToDisplay(digit) {
     if (currentInput.length >= 10) {
         alert("Number Limit Exceeded, max 10 digits")
         return
+    }
+
+    if (wasCalculation && !operator) {
+        clearScreen()
     }
 
     display.textContent = ''
@@ -47,6 +52,7 @@ function clearScreen() {
     currentInput = ''
     display.textContent = '0'
     isOutcome = false
+    wasCalculation = false
 }
 
 clear.addEventListener('click', clearScreen)
@@ -235,6 +241,7 @@ function calculation() {
         clearScreen()
         return
     }
+    wasCalculation = true
     operator = ''
     isOutcome = true
     firstNumber = outcome.toString()
