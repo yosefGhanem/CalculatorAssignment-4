@@ -70,8 +70,14 @@ function addOperator(sign) {
 
     if (currentInput.length === 0) return
 
+    if (operator !== '' && currentInput !== '') {
+        calculation()
+    }
+
     operator = ''
     operator = sign.value
+
+
 
     if (!isOutcome) {
         firstNumber = currentInput
@@ -79,8 +85,6 @@ function addOperator(sign) {
     } else {
         currentInput = ''
     }
-
-
 }
 
 operators.forEach(o => {
@@ -215,7 +219,7 @@ function calculation() {
         clearScreen()
         return
     }
-
+    operator = ''
     isOutcome = true
     firstNumber = outcome.toString()
     currentInput = outcome.toString()
