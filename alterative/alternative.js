@@ -277,11 +277,7 @@ function keyboardSupport(key) {
     if (pressedKey === '%') {
         changeToPercents()
     }
-
-    console.log(pressedKey)
-
 }
-
 
 window.addEventListener('keyup', (e) => {
     keyboardSupport(e.key)
