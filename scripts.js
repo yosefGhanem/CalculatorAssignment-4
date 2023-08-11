@@ -10,7 +10,6 @@ const display = document.querySelector('#display'),
 
 
 let firstNumber = '',
-    currentExpression = '',
     secondNumber = '',
     operator = '',
     currentInput = '',
@@ -24,23 +23,17 @@ let firstNumber = '',
 
 function addDigitToDisplay(digit) {
     if (currentInput.length >= 10) {
-        alert("Number Limit Exceeded, max 10 digits");
-        return;
+        alert("Number Limit Exceeded, max 10 digits")
+        return
     }
 
     if (wasCalculation && !operator) {
-        clearScreen();
+        clearScreen()
     }
 
-    if (isOutcome) {
-        currentExpression = outcome.toString();
-        isOutcome = false;
-    }
-
-    display.textContent = '';
-    currentInput += digit;
-    currentExpression += digit;
-    display.textContent = currentExpression;
+    display.textContent = ''
+    currentInput += digit
+    display.textContent = currentInput
 }
 
 digits.forEach(digit => {
@@ -57,7 +50,6 @@ function clearScreen() {
     operator = ''
     outcome = null
     currentInput = ''
-    currentExpression = ''
     display.textContent = '0'
     isOutcome = false
     wasCalculation = false
@@ -85,29 +77,23 @@ del.addEventListener('click', delDigit)
 function addOperator(sign) {
 
     if (currentInput.length === 0) {
-        currentInput = '0';
+        currentInput = '0'
     }
 
     if (operator !== '' && currentInput !== '') {
-        calculation();
-        currentExpression = outcome.toString();
-        display.textContent = currentExpression;
+        calculation()
     }
 
-    operator = sign;
+    operator = ''
+    operator = sign
 
     if (!isOutcome) {
-        firstNumber = currentInput;
-        currentInput = '';
+        firstNumber = currentInput
+        currentInput = ''
     } else {
-        currentInput = '';
+        currentInput = ''
     }
-
-    currentExpression += ` ${operator} `;
-    display.textContent = currentExpression;
-
-    isOutcome = false;
-    }
+}
 
 operators.forEach(o => {
     o.addEventListener('click', (e) => {
