@@ -24,14 +24,15 @@ function addDigitToDisplay(digit) {
         alert("Number Limit Exceeded, max 10 digits")
         return
     }
+
     display.textContent = ''
-    currentInput += digit || digit.value
+    currentInput += digit
     display.textContent = currentInput
 }
 
 digits.forEach(digit => {
     digit.addEventListener('click', (e) => {
-        addDigitToDisplay(e.target)
+        addDigitToDisplay(e.target.value)
     })
 })
 
@@ -77,7 +78,7 @@ function addOperator(sign) {
     }
 
     operator = ''
-    operator = sign || sign.value
+    operator = sign
 
     if (!isOutcome) {
         firstNumber = currentInput
@@ -89,7 +90,7 @@ function addOperator(sign) {
 
 operators.forEach(o => {
     o.addEventListener('click', (e) => {
-        addOperator(e.target)
+        addOperator(e.target.value)
     })
 })
 
