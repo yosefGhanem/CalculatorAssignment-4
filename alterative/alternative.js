@@ -25,7 +25,7 @@ function addDigitToDisplay(digit) {
         return
     }
     display.textContent = ''
-    currentInput += digit.value
+    currentInput += digit || digit.value
     display.textContent = currentInput
 }
 
@@ -77,7 +77,7 @@ function addOperator(sign) {
     }
 
     operator = ''
-    operator = sign.value
+    operator = sign || sign.value
 
     if (!isOutcome) {
         firstNumber = currentInput
@@ -194,14 +194,12 @@ function multiply(num1, num2) {
 // Getting the result
 
 function calculation() {
-
     if (operator && currentInput.length === 0) return
 
     secondNumber = currentInput
 
     let firstNumberInt = parseFloat(firstNumber)
     let secondNumberInt = parseFloat(secondNumber)
-
 
     if (operator === '/' && secondNumberInt === 0) {
         alert('You cannot divide by 0')
@@ -243,3 +241,48 @@ function calculation() {
 }
 
 equals.addEventListener('click', calculation)
+
+// Keyboard support
+
+function keyboardSupport(key) {
+    let pressedKey = key
+    const operatorSigns = ['+', '-', '*', '/']
+    const regExCheck = /^[0-9]+$/
+
+
+    if (operatorSigns.includes(pressedKey)) {
+        addOperator(pressedKey)
+    }
+
+    if (pressedKey.match(regExCheck)) {
+        addDigitToDisplay(pressedKey)
+    }
+
+    if (pressedKey === "Backspace") {
+        delDigit()
+    }
+
+    if (pressedKey === 'Delete') {
+        clearScreen()
+    }
+
+    if (pressedKey === '.') {
+        addDecimalPoint()
+    }
+
+    if (pressedKey === 'Enter' || pressedKey === '=') {
+        calculation()
+    }
+
+    if (pressedKey === '%') {
+        changeToPercents()
+    }
+
+    console.log(pressedKey)
+
+}
+
+
+window.addEventListener('keyup', (e) => {
+    keyboardSupport(e.key)
+})
