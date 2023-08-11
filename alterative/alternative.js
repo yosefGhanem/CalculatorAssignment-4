@@ -68,7 +68,9 @@ del.addEventListener('click', delDigit)
 
 function addOperator(sign) {
 
-    if (currentInput.length === 0) return
+    if (currentInput.length === 0) {
+        currentInput = '0'
+    }
 
     if (operator !== '' && currentInput !== '') {
         calculation()
@@ -76,8 +78,6 @@ function addOperator(sign) {
 
     operator = ''
     operator = sign.value
-
-
 
     if (!isOutcome) {
         firstNumber = currentInput
@@ -160,7 +160,7 @@ function changeToPercents() {
 percent.addEventListener('click', changeToPercents)
 
 
-// Calculation
+// Check for number length
 
 function checkOutcomeLength(result) {
     if (result.toString().length > 10) {
@@ -168,6 +168,8 @@ function checkOutcomeLength(result) {
         return true
     }
 }
+
+// Calculation functions
 
 function addition(num1, num2) {
     outcome = num1 + num2
@@ -189,14 +191,23 @@ function multiply(num1, num2) {
 
 }
 
-
+// Getting the result
 
 function calculation() {
+
+    if (operator && currentInput.length === 0) return
+
     secondNumber = currentInput
 
     let firstNumberInt = parseFloat(firstNumber)
     let secondNumberInt = parseFloat(secondNumber)
 
+
+    if (operator === '/' && secondNumberInt === 0) {
+        alert('You cannot divide by 0')
+        clearScreen()
+        return
+    }
 
     if (operator === '+') {
         addition(firstNumberInt, secondNumberInt)
@@ -208,7 +219,6 @@ function calculation() {
 
     if (operator === '/') {
         divide(firstNumberInt, secondNumberInt)
-
     }
 
     if (operator === '*') {
