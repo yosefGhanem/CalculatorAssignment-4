@@ -107,7 +107,7 @@ function addOperator(sign) {
     display.textContent = currentExpression;
 
     isOutcome = false;
-}
+    }
 
 operators.forEach(o => {
     o.addEventListener('click', (e) => {

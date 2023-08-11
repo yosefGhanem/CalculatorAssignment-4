@@ -1,46 +1,47 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Fraunces&display=swap"
-      rel="stylesheet"
-    />
-    <link href="style.css" rel="stylesheet" type="text/css" />
-    <title>LYPP calculator</title>
-  </head>
-  <body>
-    <main id="calculator">
-      <div id="container">
-        <div id="display"></div>
-        <button type="button" class="clear" value="clear">AC</button>
-        <button type="button" class="sign" value="sign">+/-</button>
-        <button type="button" class="percent" value="percent">%</button>
-        <button type="button" class="operator" value="/">/</button>
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<link
+			href="https://fonts.googleapis.com/css2?family=Fraunces&display=swap"
+			rel="stylesheet"
+		/>
+		<link href="style.css" rel="stylesheet" type="text/css" />
+		<script src="scripts.js" defer></script>
+		<title>LYPP calculator</title>
+	</head>
+	<body>
+		<main id="calculator">
+			<div id="container">
+				<div id="display">0</div>
+				<button type="button" class="clear" value="clear">AC</button>
+				<button type="button" class="sign" value="sign">+/-</button>
+				<button type="button" class="percent" value="percent">%</button>
+				<button type="button" class="operator" value="/">/</button>
 
-        <button type="button" class="digit" value="7">7</button>
-        <button type="button" class="digit" value="8">8</button>
-        <button type="button" class="digit" value="9">9</button>
-        <button type="button" class="operator" value="X">X</button>
+				<button type="button" class="digit" value="7">7</button>
+				<button type="button" class="digit" value="8">8</button>
+				<button type="button" class="digit" value="9">9</button>
+				<button type="button" class="operator" value="*">*</button>
 
-        <button type="button" class="digit" value="4">4</button>
-        <button type="button" class="digit" value="5">5</button>
-        <button type="button" class="digit" value="6">6</button>
-        <button type="button" class="operator" value="-">-</button>
+				<button type="button" class="digit" value="4">4</button>
+				<button type="button" class="digit" value="5">5</button>
+				<button type="button" class="digit" value="6">6</button>
+				<button type="button" class="operator" value="-">-</button>
 
-        <button type="button" class="digit" value="1">1</button>
-        <button type="button" class="digit" value="2">2</button>
-        <button type="button" class="digit" value="3">3</button>
-        <button type="button" class="operator" value="+">+</button>
+				<button type="button" class="digit" value="1">1</button>
+				<button type="button" class="digit" value="2">2</button>
+				<button type="button" class="digit" value="3">3</button>
+				<button type="button" class="operator" value="+">+</button>
 
-        <button type="button" class="backspace" value="back">BACK</button>
-        <button type="button" class="digitzero" value="0">0</button>
-        <button type="button" class="digit decimal" value=".">.</button>
-        <button type="button" class="equal" value="=">=</button>
-      </div>
-    </main>
-
-    <script src="scripts.js"></script>
-  </body>
+				<button type="button" class="backspace" value="back">
+					BACK
+				</button>
+				<button type="button" class="digit" value="0">0</button>
+				<button type="button" class="decimal" value=".">.</button>
+				<button type="button" class="equal" value="=">=</button>
+			</div>
+		</main>
+	</body>
 </html>
