@@ -260,34 +260,14 @@ function keyboardSupport(key) {
     const operatorSigns = ['+', '-', '*', '/']
     const regExCheck = /^[0-9]+$/
 
-
-    if (operatorSigns.includes(pressedKey)) {
-        addOperator(pressedKey)
-    }
-
-    if (pressedKey.match(regExCheck)) {
-        addDigitToDisplay(pressedKey)
-    }
-
-    if (pressedKey === "Backspace") {
-        delDigit()
-    }
-
-    if (pressedKey === 'Delete') {
-        clearScreen()
-    }
-
-    if (pressedKey === '.') {
-        addDecimalPoint()
-    }
-
-    if (pressedKey === 'Enter' || pressedKey === '=') {
-        calculation()
-    }
-
-    if (pressedKey === '%') {
-        changeToPercents()
-    }
+    // an if statement with one line no need for curly braces >> so it can be slimmed down
+    if (operatorSigns.includes(pressedKey)) addOperator(pressedKey)
+    if (pressedKey.match(regExCheck)) addDigitToDisplay(pressedKey)
+    if (pressedKey === "Backspace") delDigit()
+    if (pressedKey === 'Delete') clearScreen()
+    if (pressedKey === '.') addDecimalPoint()
+    if (pressedKey === 'Enter' || pressedKey === '=') calculation()
+    if (pressedKey === '%') changeToPercents()
 }
 
 window.addEventListener('keyup', (e) => {
